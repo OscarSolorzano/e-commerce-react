@@ -1,0 +1,40 @@
+.nav-product{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 3rem;
+}
+
+.home-link{
+    width: 4rem;
+    text-decoration: none;
+}
+
+.circle{
+    width: 10px;
+    height: 10px;
+    margin: 0 3px;
+    padding: 0;
+    background-color: grey;
+    border-radius: 50%;
+}
+
+.nav-product-title{
+    max-width: 80%;
+}
+
+.carousel-img-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+    height: 300px;
+}
+
+.carousel-img{
+    max-height: 225px;
+    height: auto;
+    max-width: 80%;
+    width: auto;
+    object-fit: contain
+}
