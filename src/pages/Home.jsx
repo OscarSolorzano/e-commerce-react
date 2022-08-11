@@ -14,6 +14,7 @@ import {
     Carousel
 } from 'react-bootstrap'
 import axios from 'axios';
+import { addCartThunk } from '../store/slices/cart.slice';
 
 const Home = () => {
 
@@ -36,6 +37,14 @@ const Home = () => {
     }, [])
 
     const products = useSelector(state => state.products)
+
+    const addToCart = product => {
+        const productToAdd = {
+            id: product.id,
+            quantity: 1
+        }
+        dispatch(addCartThunk(productToAdd))
+    }
 
     return (
         <div>
@@ -182,20 +191,30 @@ const Home = () => {
                                 <Card
                                     className='card'
                                     key={product.id}
-                                    onClick={() => navigate(`/product/${product.id}`)}
                                 >
                                     <Card.Img
                                         variant='top'
                                         className='card-img'
                                         src={product.productImgs[0]}
+                                        onClick={() => navigate(`/product/${product.id}`)}
                                     />
-                                    <Card.Body>
+                                    <Card.Body
+                                     onClick={() => navigate(`/product/${product.id}`)}
+                                     className='pb-0 mb-0'
+                                     >
                                         <Card.Title>{product.title}</Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">
                                             <b>Price:</b>
                                         </Card.Subtitle>
                                         <Card.Text>${product.price}</Card.Text>
                                     </Card.Body>
+                                    <div className='add-to-cart-btn-cntnr'>
+                                            <Button 
+                                            className='add-to-cart-btn'
+                                            onClick={() => addToCart(product)}>
+                                                Add to Cart
+                                            </Button>
+                                    </div>
                                 </Card>
                             ))}
                     </Row>
