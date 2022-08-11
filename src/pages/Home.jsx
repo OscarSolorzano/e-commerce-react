@@ -11,7 +11,7 @@ import {
     Button,
     ListGroup,
     Offcanvas,
-    Dropdown
+    Carousel
 } from 'react-bootstrap'
 import axios from 'axios';
 
@@ -25,6 +25,8 @@ const Home = () => {
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
+
+    const [dropDwn, setDropDwn] = useState(false)
 
     useEffect(() => {
         dispatch(getProductsThunk())
@@ -42,73 +44,67 @@ const Home = () => {
                     <Offcanvas.Title>Filters</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <Dropdown className="d-inline mx-2" autoClose={false}>
-                        <Dropdown.Toggle className='drop-dwn-category-btn' id="dropdown-autoclose-false">
-                            Category
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className='drop-dwn-category' show={true}>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item
-                                    className='drop-down-item'
-                                    onClick={() => {
-                                        dispatch(getProductsThunk())
-                                        handleClose()
-                                    }}
-                                >
-                                    All
-                                </ListGroup.Item>
-                                {
-                                    categories.map(categorie => (
-                                        <ListGroup.Item
-                                            className='drop-down-item'
-                                            key={categorie.id}
-                                            onClick={() => {
-                                                dispatch(filterCategoryThunk(categorie.id))
-                                                handleClose()
-                                            }}
-                                        >
-                                            {categorie.name}
-                                        </ListGroup.Item>
-                                    ))
-                                }
-                            </ListGroup>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <div className='drop-down-filter'>
+                        <div className='drop-down-title' onClick={() => setDropDwn(!dropDwn)}>
+                            <h4>Category</h4> <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <ListGroup variant="flush" className={'drop-down-menu ' + (dropDwn && 'closed')}>
+                            <ListGroup.Item
+                                className='drop-down-item'
+                                onClick={() => {
+                                    dispatch(getProductsThunk())
+                                }}
+                            >
+                                All
+                            </ListGroup.Item>
+                            {
+                                categories.map(categorie => (
+                                    <ListGroup.Item
+                                        className='drop-down-item'
+                                        key={categorie.id}
+                                        onClick={() => {
+                                            dispatch(filterCategoryThunk(categorie.id))
+                                        }}
+                                    >
+                                        {categorie.name}
+                                    </ListGroup.Item>
+                                ))
+                            }
+                        </ListGroup>
+                    </div>
                 </Offcanvas.Body>
             </Offcanvas>
 
             <Row>
                 <Col lg={3} xl={2} className="d-none d-lg-block">
-                    <Dropdown className="d-inline mx-2" autoClose={false}>
-                        <Dropdown.Toggle className='drop-dwn-category-btn' id="dropdown-autoclose-false">
-                            Category
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className='drop-dwn-category' show={true}>
-                            <ListGroup variant="flush">
-                                <ListGroup.Item
-                                    className='drop-down-item'
-                                    onClick={() => {
-                                        dispatch(getProductsThunk())
-                                    }}
-                                >
-                                    All
-                                </ListGroup.Item>
-                                {
-                                    categories.map(categorie => (
-                                        <ListGroup.Item
-                                            className='drop-down-item'
-                                            key={categorie.id}
-                                            onClick={() => {
-                                                dispatch(filterCategoryThunk(categorie.id))
-                                            }}
-                                        >
-                                            {categorie.name}
-                                        </ListGroup.Item>
-                                    ))
-                                }
-                            </ListGroup>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <div className='drop-down-filter'>
+                        <div className='drop-down-title' onClick={() => setDropDwn(!dropDwn)}>
+                            <h4>Category</h4> <i className="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <ListGroup variant="flush" className={'drop-down-menu ' + (dropDwn && 'closed')}>
+                            <ListGroup.Item
+                                className='drop-down-item'
+                                onClick={() => {
+                                    dispatch(getProductsThunk())
+                                }}
+                            >
+                                All
+                            </ListGroup.Item>
+                            {
+                                categories.map(categorie => (
+                                    <ListGroup.Item
+                                        className='drop-down-item'
+                                        key={categorie.id}
+                                        onClick={() => {
+                                            dispatch(filterCategoryThunk(categorie.id))
+                                        }}
+                                    >
+                                        {categorie.name}
+                                    </ListGroup.Item>
+                                ))
+                            }
+                        </ListGroup>
+                    </div>
                 </Col>
                 <Col>
                     <h1>Home</h1>
@@ -117,14 +113,13 @@ const Home = () => {
 
                     <InputGroup className="mb-3">
                         <Form.Control
-                            placeholder="Recipient's username"
-                            aria-label="Recipient's username"
+                            placeholder="Start typing a product..."
                             aria-describedby="basic-addon2"
                             value={productSearched}
                             onChange={e => setProductSearched(e.target.value)}
                         />
                         <Button
-                            variant="outline-secondary"
+                            variant="secondary"
                             className='search-btn'
                             onClick={() => dispatch(filteredProductsThunk(productSearched))}
                         >
@@ -133,12 +128,52 @@ const Home = () => {
 
                         {/* Filter Buton */}
 
-                        <Button variant="secondary" className="d-lg-none search-btn" onClick={handleShow}>
+                        <Button variant="primary" className="d-lg-none search-btn" onClick={handleShow}>
                             <i className="fa-solid fa-filter"></i>
                         </Button>
                     </InputGroup>
-
-
+                    <Row className='p-0'>
+                        <Carousel>
+                            <Carousel.Item
+                                onClick={() => {
+                                    dispatch(filterCategoryThunk(2))
+                                    window.scroll({
+                                        top: 300,
+                                        left: 100,
+                                        behavior: 'smooth'
+                                      })
+                                }}
+                            >
+                                <img
+                                    className="d-block w-100"
+                                    src="/assets/3.png"
+                                    alt="First slide"
+                                />
+                            </Carousel.Item>
+                            <Carousel.Item
+                                onClick={() => {
+                                    dispatch(filterCategoryThunk(3))
+                                    window.scroll({
+                                        top: 400,
+                                        left: 100,
+                                        behavior: 'smooth'
+                                      })
+                                }}>
+                                <img
+                                    className="d-block w-100"
+                                    src="/assets/1.png"
+                                    alt="Second slide"
+                                />
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img
+                                    className="d-block w-100"
+                                    src="/assets/2.png"
+                                    alt="Third slide"
+                                />
+                            </Carousel.Item>
+                        </Carousel>
+                    </Row>
                     {/* Product Cards */}
 
                     <Row className=" card-container">

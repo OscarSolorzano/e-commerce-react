@@ -18,19 +18,32 @@
 width: 20%;
 }
 
-.drop-dwn-category-btn{
-    background-color: transparent;
-    color: grey;
-    border-style: none;
+.drop-down-filter{
+    margin-right: 2rem;
 }
 
-.drop-dwn-category{
-    border-style: none;
-    z-index: 1;
+.drop-down-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drop-down-menu{
+    max-height: 300px;
+    overflow: hidden;
+    transition: all ease-in-out 0.25s;
+}
+
+.drop-down-menu.closed {
+    max-height: 0; 
 }
 
 .drop-down-item:hover{
     background-color: brown;
+}
+
+.offcanvas{
+    max-width: 90vw;
 }
 
 .card-container{

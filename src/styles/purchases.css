@@ -1,0 +1,17 @@
+.purchase{
+    padding: 0;
+    height: auto;
+    width: 90%;
+}
+
+.purchase-body{
+    padding: 0;
+}
+
+.item-title{
+    width: 60%;
+}
+
+.total-purchase{
+    background-color: #008DBA !important;
+}

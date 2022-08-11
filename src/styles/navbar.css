@@ -1,9 +1,8 @@
-*{
+* {
     transition: ease-in-out 0.5s;
 }
 
 .navbar {
-    padding: 0 1rem 0 2rem;
     min-height: 4rem;
 }
 
@@ -28,10 +27,19 @@
     padding: 1rem 0;
 }
 
+.navbar-toggler{
+    margin-right: 1rem;
+    border-style: none;
+}
+
+.navbar-brand{
+    margin-left: 2rem ;
+}
+
 
 @media (min-width: 992px) {
     .navbar {
-        padding-right: 0rem;
+        padding: 0 0 0 2rem;
     }
 
     .navbar-collapse {
