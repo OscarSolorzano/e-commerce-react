@@ -25,28 +25,26 @@ const User = () => {
             <Container className='user-info-container'>                
                 <Card className="text-center mx-5">
                     <Card.Body>
-                        <Card.Title className='mt-5'><i className="fa-solid fa-user"></i> Name</Card.Title>
+                        <Card.Title className=''><i className="fa-solid fa-user me-2"></i> Name</Card.Title>
                         <Card.Text>
                             {userInfo?.firstName + ' ' + userInfo?.lastName}
                         </Card.Text>
-                        <Card.Title><i className="fa-solid fa-envelope"></i> e-mail</Card.Title>
+                        <Card.Title><i className="fa-solid fa-envelope me-2"></i> e-mail</Card.Title>
                         <Card.Text>
                             {userInfo?.email}
                         </Card.Text>
-                        <Card.Title><i className="fa-solid fa-phone"></i> Phone</Card.Title>
+                        <Card.Title><i className="fa-solid fa-phone me-2"></i> Phone</Card.Title>
                         <Card.Text>
                             {userInfo?.phone}
                         </Card.Text>
-                    </Card.Body>
-                    <Card.Footer className="text-muted">
                         <Button
                             variant="danger"
                             onClick={logOut}
-                            className='big-btn my-3'
+                            className='big-btn mt-4'
                         >
                             Log Out
                         </Button>
-                    </Card.Footer>
+                    </Card.Body>
                 </Card>
             </Container>
         </>

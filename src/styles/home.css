@@ -39,11 +39,24 @@ width: 20%;
 }
 
 .drop-down-item:hover{
-    background-color: brown;
+    background-color: #00789E;
 }
 
 .offcanvas{
     max-width: 90vw;
+}
+
+.home-container{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+.home{
+    max-width: 1300px;
 }
 
 .card-container{
@@ -51,14 +64,18 @@ width: 20%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
 }
 
 .card{
     width: 100%;
-    height: 25rem;
+    height: 29rem;
     margin: 1rem 0;
+}
+
+.card-title {
+    height: 3rem;
 }
 
 .card-img{
@@ -80,6 +97,7 @@ width: 20%;
 
 .add-to-cart-btn{
     width: 15rem;
+    height: 3rem;
 }
 
 @media (min-width: 576px) {

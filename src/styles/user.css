@@ -11,7 +11,12 @@
     justify-content: center;
     width: 100%;
 }
-
+.card-title{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
 .big-btn{
     width: 100%;
 }

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { filterCategoryThunk, filteredProductsThunk, getProductsThunk } from '../store/slices/products.slice';
+import { useForm } from 'react-hook-form';
+import { filterCategoryThunk, filteredProductsThunk, getProductsThunk, setProducts } from '../store/slices/products.slice';
 import {
     Row,
     Col,
@@ -23,11 +24,17 @@ const Home = () => {
     const [productSearched, setProductSearched] = useState('')
     const [categories, setCategories] = useState([])
 
+
+    const { register, handleSubmit, reset } = useForm()
+
+
+
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
     const [dropDwn, setDropDwn] = useState(false)
+    const [dropDwn2, setDropDwn2] = useState(false)
 
     useEffect(() => {
         dispatch(getProductsThunk())
@@ -36,7 +43,7 @@ const Home = () => {
             .then(res => setCategories(res.data.data.categories))
     }, [])
 
-    const products = useSelector(state => state.products)
+    let products = useSelector(state => state.products)
 
     const addToCart = product => {
         const productToAdd = {
@@ -45,6 +52,21 @@ const Home = () => {
         }
         dispatch(addCartThunk(productToAdd))
     }
+
+    const submit = data => {
+        const filteredProductsPrice = products.filter(product =>
+            Number(product.price) >= data.min
+        ).filter(product =>
+            Number(product.price) <= data.max
+        )
+        console.log(filteredProductsPrice)
+        dispatch(setProducts(filteredProductsPrice))
+        reset({
+            min: '',
+            max: ''
+        })
+    }
+
 
     return (
         <div>
@@ -114,110 +136,133 @@ const Home = () => {
                             }
                         </ListGroup>
                     </div>
-                </Col>
-                <Col>
-                    <h1>Home</h1>
+                    <div className='drop-down-filter'>
+                        <div className='drop-down-title' onClick={() => setDropDwn2(!dropDwn2)}>
+                            <h4>Price</h4> <i className="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div className={'drop-down-menu ' + (dropDwn2 && 'closed')}>
+                            <div>
+                                <Form onSubmit={handleSubmit(submit)}>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Label>From</Form.Label>
+                                        <Form.Control type="number" placeholder="$"  {...register('min')} />
+                                    </Form.Group>
 
-                    {/* Search Product */}
-
-                    <InputGroup className="mb-3">
-                        <Form.Control
-                            placeholder="Start typing a product..."
-                            aria-describedby="basic-addon2"
-                            value={productSearched}
-                            onChange={e => setProductSearched(e.target.value)}
-                        />
-                        <Button
-                            variant="secondary"
-                            className='search-btn'
-                            onClick={() => dispatch(filteredProductsThunk(productSearched))}
-                        >
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                        </Button>
-
-                        {/* Filter Buton */}
-
-                        <Button variant="primary" className="d-lg-none search-btn" onClick={handleShow}>
-                            <i className="fa-solid fa-filter"></i>
-                        </Button>
-                    </InputGroup>
-                    <Row className='p-0'>
-                        <Carousel>
-                            <Carousel.Item
-                                onClick={() => {
-                                    dispatch(filterCategoryThunk(2))
-                                    window.scroll({
-                                        top: 300,
-                                        left: 100,
-                                        behavior: 'smooth'
-                                      })
-                                }}
-                            >
-                                <img
-                                    className="d-block w-100"
-                                    src="/assets/3.png"
-                                    alt="First slide"
-                                />
-                            </Carousel.Item>
-                            <Carousel.Item
-                                onClick={() => {
-                                    dispatch(filterCategoryThunk(3))
-                                    window.scroll({
-                                        top: 400,
-                                        left: 100,
-                                        behavior: 'smooth'
-                                      })
-                                }}>
-                                <img
-                                    className="d-block w-100"
-                                    src="/assets/1.png"
-                                    alt="Second slide"
-                                />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img
-                                    className="d-block w-100"
-                                    src="/assets/2.png"
-                                    alt="Third slide"
-                                />
-                            </Carousel.Item>
-                        </Carousel>
-                    </Row>
-                    {/* Product Cards */}
-
-                    <Row className=" card-container">
-                        {
-                            products.map(product => (
-                                <Card
-                                    className='card'
-                                    key={product.id}
-                                >
-                                    <Card.Img
-                                        variant='top'
-                                        className='card-img'
-                                        src={product.productImgs[0]}
-                                        onClick={() => navigate(`/product/${product.id}`)}
-                                    />
-                                    <Card.Body
-                                     onClick={() => navigate(`/product/${product.id}`)}
-                                     className='pb-0 mb-0'
-                                     >
-                                        <Card.Title>{product.title}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">
-                                            <b>Price:</b>
-                                        </Card.Subtitle>
-                                        <Card.Text>${product.price}</Card.Text>
-                                    </Card.Body>
-                                    <div className='add-to-cart-btn-cntnr'>
-                                            <Button 
-                                            className='add-to-cart-btn'
-                                            onClick={() => addToCart(product)}>
-                                                Add to Cart
-                                            </Button>
+                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                        <Form.Label>Up To</Form.Label>
+                                        <Form.Control type="number" placeholder="$" {...register('max')} />
+                                    </Form.Group>
+                                    <div className='big-btn-container'>
+                                        <Button variant="primary" type="submit" className='big-btn'>
+                                        Filter by Price
+                                        </Button>
                                     </div>
-                                </Card>
-                            ))}
-                    </Row>
+                                </Form>
+                            </div>
+                        </div>
+                    </div>
+                </Col>
+                <Col className='home-container'>
+                    <div className='home'>
+                        <h1>Home</h1>
+
+                        {/* Search Product */}
+
+                        <InputGroup className="mb-3">
+                            <Form.Control
+                                placeholder="Start typing a product..."
+                                aria-describedby="basic-addon2"
+                                value={productSearched}
+                                onChange={e => setProductSearched(e.target.value)}
+                            />
+                            <Button
+                                variant="secondary"
+                                className='search-btn'
+                                onClick={() => dispatch(filteredProductsThunk(productSearched))}
+                            >
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </Button>
+
+                            {/* Filter Buton */}
+
+                            <Button variant="primary" className="d-lg-none search-btn" onClick={handleShow}>
+                                <i className="fa-solid fa-filter"></i>
+                            </Button>
+                        </InputGroup>
+                        <Row className='p-0'>
+                            <Carousel>
+                                <Carousel.Item
+                                    onClick={() => {
+                                        dispatch(filterCategoryThunk(2))
+                                    }}
+                                >
+                                    <img
+                                        className="d-block w-100"
+                                        src="/assets/3.png"
+                                        alt="First slide"
+                                    />
+                                </Carousel.Item>
+                                <Carousel.Item
+                                    onClick={() => {
+                                        dispatch(filterCategoryThunk(3))
+                                    }}>
+                                    <img
+                                        className="d-block w-100"
+                                        src="/assets/1.png"
+                                        alt="Second slide"
+                                    />
+                                </Carousel.Item>
+                                <Carousel.Item>
+                                    <img
+                                        className="d-block w-100"
+                                        src="/assets/2.png"
+                                        alt="Third slide"
+                                    />
+                                </Carousel.Item>
+                            </Carousel>
+                        </Row>
+                        {/* Product Cards */}
+
+                        <Row className=" card-container">
+                            {
+                                products.map(product => (
+                                    <Card
+                                        className='card'
+                                        key={product.id}
+                                    >
+                                        <Card.Img
+                                            variant='top'
+                                            className='card-img'
+                                            src={product.productImgs[0]}
+                                            onClick={() => navigate(`/product/${product.id}`)}
+                                        />
+                                        <Card.Body
+                                            className='pb-0 mb-0'
+                                        >
+                                            <Card.Title onClick={() => navigate(`/product/${product.id}`)}>
+                                                {product.title}
+                                            </Card.Title>
+                                            <Card.Subtitle
+                                                className="mb-2 text-muted"
+                                                onClick={() => navigate(`/product/${product.id}`)}
+                                            >
+                                                <b>Price:</b>
+                                            </Card.Subtitle>
+                                            <Card.Text onClick={() => navigate(`/product/${product.id}`)}>
+                                                ${product.price}
+                                            </Card.Text>
+                                            <div className='add-to-cart-btn-cntnr'>
+                                                <Button
+                                                    className='add-to-cart-btn'
+                                                    onClick={() => addToCart(product)}>
+                                                    Add to Cart
+                                                </Button>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                ))}
+                        </Row>
+                    </div>
                 </Col>
             </Row>
         </div>
