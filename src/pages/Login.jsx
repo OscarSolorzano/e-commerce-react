@@ -3,6 +3,8 @@ import React from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
 
 const Login = () => {
 
@@ -65,11 +67,14 @@ const Login = () => {
                             <Form.Control type="password" placeholder="Password" {...register('password')} />
                         </Form.Group>
                         <div className='big-btn-container'>
-                            <Button variant="primary" type="submit" className='big-btn mt-5'>
+                            <Button variant="primary" type="submit" className='big-btn mt-3 mb-2'>
                                 Submit
                             </Button>
                         </div>
                     </Form>
+                    <div>
+                        <p>Don't have an acount? <Link to={'/singup'}>Sing up</Link></p>
+                    </div>
                 </Card.Body>
             </Card>
         </div>
