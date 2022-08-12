@@ -39,6 +39,18 @@ const Login = () => {
             <Card>
                 <Card.Body>
                     <h1>Login</h1>
+                    <div className='test-data'>
+                        <h5>Test Data</h5>
+                        <div>
+                            <i className="fa-solid fa-envelope mx-2"></i>
+                            <span>alex@gmail.com</span>
+                        </div>
+                        <div>
+                            <i className="fa-solid fa-lock mx-2"></i>
+                            <span>password</span>
+                        </div>
+
+                    </div>
                     <Form onSubmit={handleSubmit(submit)}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email address</Form.Label>

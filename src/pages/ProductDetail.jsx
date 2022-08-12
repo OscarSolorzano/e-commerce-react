@@ -51,6 +51,14 @@ const ProductDetail = () => {
         dispatch(addCartThunk(productToAdd))
     }
 
+    const addToCartFast = () => {
+        const productToAdd = {
+            id: product.id,
+            quantity: 1
+        }
+        dispatch(addCartThunk(productToAdd))
+    }
+
     return (
         <div className='flex-cl'>
             <div className='product-detail-ctnr'>
@@ -118,23 +126,39 @@ const ProductDetail = () => {
                         {
                             suggestedProducts.map(product => (
                                 <Card
-                                    className='card'
-                                    key={product.id}
+                                className='card'
+                                key={product.id}
+                            >
+                                <Card.Img
+                                    variant='top'
+                                    className='card-img'
+                                    src={product.productImgs[0]}
                                     onClick={() => navigate(`/product/${product.id}`)}
+                                />
+                                <Card.Body
+                                    className='pb-0 mb-0'
                                 >
-                                    <Card.Img
-                                        variant='top'
-                                        className='card-img'
-                                        src={product.productImgs[0]}
-                                    />
-                                    <Card.Body>
-                                        <Card.Title>{product.title}</Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">
-                                            <b>Price:</b>
-                                        </Card.Subtitle>
-                                        <Card.Text>${product.price}</Card.Text>
-                                    </Card.Body>
-                                </Card>
+                                    <Card.Title onClick={() => navigate(`/product/${product.id}`)}>
+                                        {product.title}
+                                    </Card.Title>
+                                    <Card.Subtitle
+                                        className="mb-2 text-muted"
+                                        onClick={() => navigate(`/product/${product.id}`)}
+                                    >
+                                        <b>Price:</b>
+                                    </Card.Subtitle>
+                                    <Card.Text onClick={() => navigate(`/product/${product.id}`)}>
+                                        ${product.price}
+                                    </Card.Text>
+                                    <div className='add-to-cart-btn-cntnr'>
+                                        <Button
+                                            className='add-to-cart-btn'
+                                            onClick={() => addToCartFast(product)}>
+                                            Add to Cart
+                                        </Button>
+                                    </div>
+                                </Card.Body>
+                            </Card>
                             ))
                         }
                     </Row>

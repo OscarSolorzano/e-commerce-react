@@ -23,7 +23,7 @@ const User = () => {
             </Row>
             <h1 className='ms-5'>User Info</h1>
             <Container className='user-info-container'>                
-                <Card className="text-center mx-5">
+                <Card className="text-center mx-5 round">
                     <Card.Body>
                         <Card.Title className=''><i className="fa-solid fa-user me-2"></i> Name</Card.Title>
                         <Card.Text>

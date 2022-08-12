@@ -10,6 +10,8 @@ import './styles/productdetail.css';
 import './styles/purchases.css';
 import './styles/cart.css';
 import './styles/user.css';
+import './styles/logIn.css';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
