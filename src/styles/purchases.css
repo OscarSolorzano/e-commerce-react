@@ -1,11 +1,13 @@
 .purchase{
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(128, 128, 128, 0.281);
+    margin: 1.5rem 0;
     padding: 0;
-    height: auto;
-    width: 90%;
+    border-radius: 8px;
 }
-
-.purchase-body{
-    padding: 0;
+.purchase h3{
+    margin: 1rem 2rem;
 }
 
 .item-title{

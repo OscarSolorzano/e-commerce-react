@@ -67,6 +67,20 @@ const Home = () => {
         })
     }
 
+    const submit2 = data => {
+        const filteredProductsPrice = products.filter(product =>
+            Number(product.price) >= data.min2
+        ).filter(product =>
+            Number(product.price) <= data.max2
+        )
+        console.log(filteredProductsPrice)
+        dispatch(setProducts(filteredProductsPrice))
+        reset({
+            min2: '',
+            max2: ''
+        })
+    }
+
 
     return (
         <div>
@@ -77,13 +91,14 @@ const Home = () => {
                 <Offcanvas.Body>
                     <div className='drop-down-filter'>
                         <div className='drop-down-title' onClick={() => setDropDwn(!dropDwn)}>
-                            <h4>Category</h4> <i class="fa-solid fa-chevron-down"></i>
+                            <h4>Category</h4> <i className="fa-solid fa-chevron-down"></i>
                         </div>
                         <ListGroup variant="flush" className={'drop-down-menu ' + (dropDwn && 'closed')}>
                             <ListGroup.Item
                                 className='drop-down-item'
                                 onClick={() => {
                                     dispatch(getProductsThunk())
+                                    handleClose()
                                 }}
                             >
                                 All
@@ -95,6 +110,7 @@ const Home = () => {
                                         key={categorie.id}
                                         onClick={() => {
                                             dispatch(filterCategoryThunk(categorie.id))
+                                            handleClose()
                                         }}
                                     >
                                         {categorie.name}
@@ -102,6 +118,31 @@ const Home = () => {
                                 ))
                             }
                         </ListGroup>
+                    </div>
+                    <div className='drop-down-filter'>
+                        <div className='drop-down-title' onClick={() => setDropDwn2(!dropDwn2)}>
+                            <h4>Price</h4> <i className="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div className={'drop-down-menu ' + (dropDwn2 && 'closed')}>
+                            <div>
+                                <Form onSubmit={handleSubmit(submit2)}>
+                                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                                        <Form.Label>From</Form.Label>
+                                        <Form.Control type="number" placeholder="$"  {...register('min2')} />
+                                    </Form.Group>
+
+                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                        <Form.Label>Up To</Form.Label>
+                                        <Form.Control type="number" placeholder="$" {...register('max2')} />
+                                    </Form.Group>
+                                    <div className='big-btn-container'>
+                                        <Button variant="primary" type="submit" className='big-btn'>
+                                        Filter by Price
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </div>
+                        </div>
                     </div>
                 </Offcanvas.Body>
             </Offcanvas>

@@ -41,9 +41,8 @@ const Purchases = () => {
             {
                 purchases.map(purchase => (
                     <Row key={purchase.id}>
-                        <Card className='purchase'>
-                            <Card.Header>{dateFormat(purchase.createdAt)}</Card.Header>
-                            <Card.Body className='purchase-body'>
+                            <div className='purchase'>
+                                <h3>{dateFormat(purchase.createdAt)}</h3>
                                 <Table striped>
                                     <thead>
                                         <tr>
@@ -68,8 +67,7 @@ const Purchases = () => {
                                         </tr>
                                     </tbody>
                                 </Table>
-                            </Card.Body>
-                        </Card>
+                                </div>
                     </Row>
 
                 ))
