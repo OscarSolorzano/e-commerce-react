@@ -53,12 +53,12 @@ const SingUp = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="text" placeholder="Password" {...register('password')} />
+                            <Form.Control type="password" placeholder="Password" {...register('password')} />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Phone 10 characters</Form.Label>
-                            <Form.Control type="text" placeholder="Phone" {...register('phone')} />
+                            <Form.Control type="password" placeholder="Phone" {...register('phone')} />
                         </Form.Group>
 
                         <div className='big-btn-container'>
